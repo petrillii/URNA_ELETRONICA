@@ -1,0 +1,177 @@
+#include <iostream>
+using namespace std;
+
+//FUNÇÃO DE SEGUNDO TURNO FUNCIONANDO! ( ˘ ³˘)♥
+//avaliação 1 de algoritmos e linguagem de programação, 1º semestre de 2020 Fatec RP
+//feito por Eduardo Petrilli, RA:2840482021004
+
+int main(int argc, char *argv[]){
+  string nome1, nome2, nome3, nome4, vencedor, empate1, empate2;
+  int num_cand1, num_cand2, num_cand3, num_cand4, nulo, branco, segundo_turno, dia, mes, ano, voto, total = 0;
+  int voto1 = 0, voto2 = 0, voto3 = 0, voto4 = 0;
+  float perc1, perc2, perc3, perc4; 
+  bool empate;
+  char flag;
+    cout.precision(2);
+
+    cout << "Bem vindo(a) a eleição para presidente da Associação de Astronomia" << endl;
+    //insrição dos candidatos
+      cout << "Por favor insira o nome do primeiro candidato e o numero (maior que 1): " << endl;
+    cin >> nome1;
+    cin >> num_cand1;
+      cout << "Insira o nome do segundo candidato e o numero (maior que 1):" << endl;
+    cin >> nome2;
+    cin >> num_cand2;
+      cout << "Insira o nome do terceiro candidato e o numero (maior que 1):" << endl;
+    cin >> nome3;
+    cin >> num_cand3;
+      cout << "Insira o nome do quarto candidato e o numero (maior que 1):" << endl;
+    cin >> nome4;
+    cin >> num_cand4;
+
+    //loop para votação
+    do{
+      //numero diferente dos candidatos tbm se torna nulo
+      cout << "DIGITE O NUMERO DO CANDIDATO: (para nulo (0) para branco (1))" << endl;
+      cin >> voto;
+          total++;
+
+      //adicionar aos contadores para nulo e branco
+      if(voto == 0)
+        nulo++;
+      else if(voto == 1)
+        branco++;
+
+      //adicionar aos contadores dos candidatos
+      if(voto == num_cand1)
+        voto1++;
+      else if(voto == num_cand2)
+        voto2++;
+      else if(voto == num_cand3)
+        voto3++;
+      else if(voto == num_cand4)
+        voto4++;
+
+      //sair do loop
+      cout << "Deseja computar mais um voto?? (S/N)" << endl;
+      cin >> flag;
+    }
+    while(flag != 'N' && flag != 'n');
+      
+    //saber se teve empate
+    if(voto1 == voto2 && voto1>voto3 && voto1>voto4){
+      empate = true;
+      empate1 = nome1;
+      empate2 = nome2;
+    }
+      else if(voto1 == voto3 && voto1>voto4 && voto1>voto2){
+        empate = true;
+        empate1 = nome1;
+        empate2 = nome3;
+      }
+      else if(voto1 == voto4 && voto1>voto3 && voto1>voto2){
+        empate = true;
+        empate1 = nome1;
+        empate2 = nome4;
+      }
+    else if(voto2 == voto3 && voto2>voto4 && voto2>voto1){
+      empate = true;
+      empate1 = nome2;
+      empate2 = nome3;
+    } 
+      else if(voto2 == voto4 && voto2>voto3 && voto2>voto1){
+        empate = true;
+        empate1 = nome2;
+        empate2 = nome4;
+      }
+    else if(voto3 == voto4 && voto3>voto2 && voto3>voto1){
+      empate = true;
+      empate1 = nome3;
+      empate2 = nome4;
+    }
+    //loop para empate
+    while(empate == true){
+      cout << "OCORREU UM EMPATE ENTRE OS CANDIDATOS! ಠ_ಠ" << endl;
+      cout << "......................................................" << endl;
+      cout << "O candidato " << empate1 << " Empatou com o " << empate2 << endl;
+      cout << "......................................................" << endl;
+      cout << "Deseja marcar a data de um segundo turno (1) ou realizar agora? (2)" << endl;
+      cin >> segundo_turno; 
+
+      //switch para segundo turno
+      switch(segundo_turno){
+        case 1:
+        cout << "Por favor digite o dia, o mes e o ano: " << endl;
+          cin >> dia;
+          cin >> mes;
+          cin >> ano;
+        cout << "Segundo turno agendado para a data: " << dia << "/" << mes << "/" << ano;
+          empate = false;
+          return 0;
+          break;
+        case 2:
+        do{
+          cout << "DIGITE O NUMERO DO CANDIDATO: (Do " << empate1 << " OU " << empate2 << ")" << endl;
+          cin >> voto;
+          total++;
+          //soma dos novos votos
+          if(voto == num_cand1)
+            voto1++;
+          else if(voto == num_cand2)
+            voto2++;
+          else if(voto == num_cand3)
+            voto3++;
+          else if(voto == num_cand4)
+            voto4++;
+
+          if(voto == 0)
+            nulo++;
+          else if(voto == 1)
+            branco++;
+
+          cout << "Deseja computar mais um voto?? (S/N)" << endl;
+          cin >> flag;
+        }
+        while(flag != 'N' && flag != 'n');
+        empate = false;
+        break;
+          default:
+            cout << "Comando invalido!!" << endl;
+            empate = false;
+            break;
+        }
+    }
+    //calculo do percentual:
+    perc1 = (voto1*100)/total;
+    perc2 = (voto2*100)/total;
+    perc3 = (voto3*100)/total;
+    perc4 = (voto4*100)/total; 
+
+      //verificar o vencedor
+      if(voto1>voto2 && voto1>voto3 && voto1>voto4)
+        vencedor = nome1;
+        else if(voto2>voto3 && voto2>voto4 && voto2>voto1)
+          vencedor = nome2;
+        else if(voto3>voto2 && voto3>voto4 && voto3>voto1)
+          vencedor = nome3;
+        else if(voto4>voto1 && voto4>voto2 && voto4>voto3)
+          vencedor = nome4;
+
+    //apresentação dos resultados
+    cout << "......................................................" << endl;
+    cout << "O TOTAL DE VOTOS NESSA VOTAÇÃO FOI DE: " << total << ". " << nulo << " VOTOS NULOS, E " << branco << " VOTOS EM BRANCO." << endl;
+    
+    cout << "......................................................" << endl;
+    cout << "O percentual de votos do candidato " << nome1 << " foi de " << perc1 << "%" << endl;
+    cout << "O percentual de votos do candidato " << nome2 << " foi de " << perc2 << "%" << endl;
+    cout << "O percentual de votos do candidato " << nome3 << " foi de " << perc3 << "%" << endl;
+    cout << "O percentual de votos do candidato " << nome4 << " foi de " << perc4 << "%" << endl;
+    
+    cout << "......................................................." << endl;
+    cout << "O(a) candidato(a) vencedor foi o(a) " << vencedor << " " << endl;
+    cout << "......................................................." << endl;
+    cout << "Desenvolvido por Eduardo Petrilli (ง '̀-'́)ง" << endl;
+    cout << "Avaliação do 1º semestre do curso de ADS" << endl;
+
+  return 0;
+}
